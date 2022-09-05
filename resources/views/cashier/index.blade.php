@@ -116,10 +116,10 @@ $("#table-detail").on("click", ".btn-table", function(){
     }else{
       var menu_id = $(this).data("id");
       $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });  
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
       $.ajax({
         type: "POST",
         data: {
