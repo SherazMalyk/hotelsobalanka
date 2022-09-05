@@ -14,8 +14,49 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
-                </div>
+                    <div class="row text-center">
+                        
+
+
+<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+<a href="/management">
+        <h5>Management</h5>
+        <a class="thumbnail" href="#">
+            <img class="img-responsive" width="50px" src="{{asset('image/management.svg')}}"/> 
+    </a>
+</a>
+
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+<a href="/cashier">
+    <h5>cashier</h5>
+        <a class="thumbnail" href="#">
+            <img class="img-responsive" width="50px" src="{{asset('image/cashier.svg')}}"/> 
+    </a>
+    </a>
+
+
+</div>
+
+<div class="col-lg-4 col-md-4 col-xs-4 thumb">
+<a href="/report">   
+    <h5>report</h5>
+        <a class="thumbnail" href="#">
+            <img class="img-responsive"  width="50px" src="{{asset('image/report.svg')}}"/> 
+    </a>
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
             </div>
         </div>
     </div>
