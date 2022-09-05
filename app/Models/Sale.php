@@ -9,6 +9,6 @@ class Sale extends Model
 {
     use HasFactory;
     public function saleDetails(){
-        return $this->hasMany(saleDetail::class);
+        return $this->hasMany(SaleDetail::class);
     }
 }

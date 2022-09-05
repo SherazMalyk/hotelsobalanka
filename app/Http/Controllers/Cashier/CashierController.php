@@ -47,18 +47,19 @@ class CashierController extends Controller
     
     public function getMenuByCategory($category_id){
         $menus = Menu::where('category_id', $category_id)->get();
-        $html='';
+        $html = '';
         foreach($menus as $menu){
             $html .= '
             <div class="col-md-3 text-center">
-            <a class="btn btn-outline-secondary btn-menu" data-id="'.$menu->id.'">
-            <img class="img-fluid" src="'.url('/menu_images/'.$menu->image).'">
-            <br>
-            '.$menu->name.'
-            <br>
-            $'.number_format($menu->price).'
-            </a>
+                <a class="btn btn-outline-secondary btn-menu" data-id="'.$menu->id.'">
+                    <img class="img-fluid" src="'.url('/menu_images/'.$menu->image).'">
+                    <br>
+                    '.$menu->name.'
+                    <br>
+                    $'.number_format($menu->price).'
+                </a>
             </div>
+            
             ';
         }
         return $html;
@@ -118,68 +119,53 @@ class CashierController extends Controller
     }
     private function getSaleDetails($sale_id){
         // list all saledetail
-
-        // list all sale detail
-        $html = '<p>Sale ID: '.$sale_id.' </p>';
-        $saleDetails= SaleDetail::where('sale_id',$sale_id)->get();
-        $html .= '<div class="table-responsive-md" style="overflow-y:scroll;
-        height: 400px; border: 1px solid #343A40"> 
+        $html = '<p>Sale ID: '.$sale_id.'</p>';
+        $saleDetails = SaleDetail::where('sale_id', $sale_id)->get();
+        $html .= '<div class="table-responsive-md" style="overflow-y:scroll; height: 400px; border: 1px solid #343A40">
         <table class="table table-stripped table-dark">
         <thead>
-        <tr>
-        <th scope="col"> ID</th>
-        <th scope="col"> Menu</th>
-        <th scope="col"> Quantity</th>
-        <th scope="col"> Price</th>
-        <th scope="col"> Total</th>
-        <th scope="col"> Status</th>
-        </tr>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Menu</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
         </thead>
         <tbody>';
-
         $showBtnPayment = true;
         foreach($saleDetails as $saleDetail){
-           
+          
             $html .= '
-            <tr> 
-            <td> '.$saleDetail->menu_id.'</td>
-            <td> '.$saleDetail->menu_name.'</td>
-            <td> '.$saleDetail->quantity.'</td>
-            <td> '.$saleDetail->menu_price.'</td>
-            <td> '.($saleDetail->menu_price * $saleDetail->quantity).'</td>';
-            if($saleDetail->status == "noConfirm"){
-                $showBtnPayment = false;
-                $html .= '<td> <a data-id="'.$saleDetail->id.'" class="btn btn-danger btn-delete-saledetail">
-                <i class="far fa-trash-alt>"
-                </a></td>';
-            }else{ // status == "confirm"
-                $html .= '<td><i class="fas fa-check-circle"></i></td>';
-
-
-            }
-            
-        
-            $html .='</tr>' ;
+            <tr>
+                <td>'.$saleDetail->menu_id.'</td>
+                <td>'.$saleDetail->menu_name.'</td>
+                <td>'.$saleDetail->quantity.'</td>
+                <td>'.$saleDetail->menu_price.'</td>
+                <td>'.($saleDetail->menu_price * $saleDetail->quantity).'</td>';
+                if($saleDetail->status == "noConfirm"){
+                    $showBtnPayment = false;
+                    $html .= '<td><a data-id="'.$saleDetail->id.'" class="btn btn-danger btn-delete-saledetail"><i class="far fa-trash-alt"></a></td>';
+                }else{ // status == "confirm"
+                    $html .= '<td><i class="fas fa-check-circle"></i></td>';
+                }
+            $html .= '</tr>';
         }
-        
-        $html .='</tbody>
-        </table>
-        </div>';
+        $html .='</tbody></table></div>';
 
         $sale = Sale::find($sale_id);
         $html .= '<hr>';
         $html .= '<h3>Total Amount: $'.number_format($sale->total_price).'</h3>';
-        if($showBtnPayment) {
-            $html .= '<button button type="button"  data-toggle="modal" data-target="#exampleModal" data-id="'.$sale_id.'" data-totalAmount="'.$sale->total_price.'" class="btn btn-success btn-block btn-payment" >Payment</button>' ;
 
+        if($showBtnPayment){
+            $html .= '<button data-id="'.$sale_id.'" data-totalAmount="'.$sale->total_price.'" class="btn btn-success btn-block btn-payment" data-toggle="modal" data-target="#exampleModal">Payment</button>';
+        }else{
+            $html .= '<button data-id="'.$sale_id.'" class="btn btn-warning btn-block btn-confirm-order">Confirm Order</button>';
         }
-        else{
-            $html .= '<button data-id="'.$sale_id.'" class="btn btn-warning btn-block btn-confirm-order">Confirm Order</button>' ;
+      
 
-        }
-        
-
-        return $html; 
+        return $html;
     }
     public function confirmOrderStatus(Request $request) {
         $sale_id = $request->sale_id;
