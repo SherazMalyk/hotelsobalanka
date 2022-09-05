@@ -115,6 +115,11 @@ $("#table-detail").on("click", ".btn-table", function(){
       alert("You need to select a table for the customer first");
     }else{
       var menu_id = $(this).data("id");
+      $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });  
       $.ajax({
         type: "POST",
         data: {
