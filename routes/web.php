@@ -61,3 +61,6 @@ Route::get('/report/show', 'App\Http\Controllers\Report\ReportController@show');
 
 // Export to excel
 Route::get('/report/show/export', 'App\Http\Controllers\Report\ReportController@export');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
