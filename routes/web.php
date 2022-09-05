@@ -36,13 +36,13 @@ Route::get('/cashier/getSaleDetailsByTable/{table_id}', 'App\Http\Controllers\Ca
 
 Route::post('/cashier/orderFood', 'App\Http\Controllers\Cashier\CashierController@orderFood');
 Route::post('/cashier/deleteSaleDetail', 'App\Http\Controllers\Cashier\CashierController@deleteSaleDetail');
-
+Route::post('/cashier/confirmOrderStatus','App\Http\Controllers\Cashier\CashierController@confirmOrderStatus' );
 Route::post('/cashier/savePayment', 'App\Http\Controllers\Cashier\CashierController@savePayment');
 
 Route::get('/cashier/showRecipt/{saleID}', 'App\Http\Controllers\Cashier\CashierController@showRecipt');
 
 
-Route::post('/cashier/confirmOrderStatus','App\Http\Controllers\Cashier\CashierController@confirmOrderStatus' );
+
 
 
 // routes for management
